@@ -23,20 +23,20 @@ class CarRacing:
         self.carImg = pygame.image.load('img\car.png')
         self.car_x_coordinate = (self.display_width * 0.45)
         self.car_y_coordinate = (self.display_height * 0.8)
-        self.car_width = 49
+        self.car_width = 31
 
         # enemy_car
-        self.enemy_car = pygame.image.load('img\enemy_car_1.png')
+        self.enemy_car = pygame.image.load('img\Ecar2.png')
         self.enemy_car_startx = random.randrange(310, 450)
         self.enemy_car_starty = -600
         self.enemy_car_speed = 5
-        self.enemy_car_width = 49
-        self.enemy_car_height = 100
+        self.enemy_car_width = 31
+        self.enemy_car_height = 99
 
         # Background
-        self.bgImg = pygame.image.load('img\\back_ground.jpg')
-        self.bg_x1 = (self.display_width / 2) - (360 / 2)
-        self.bg_x2 = (self.display_width / 2) - (360 / 2)
+        self.bgImg = pygame.image.load('img\\bg.jpg')
+        self.bg_x1 = (self.display_width / 2) - (400 / 2)
+        self.bg_x2 = (self.display_width / 2) - (400 / 2)
         self.bg_y1 = 0
         self.bg_y2 = -600
         self.bg_speed = 3
@@ -111,7 +111,7 @@ class CarRacing:
 
     def back_ground_raod(self):
         self.gameDisplay.blit(self.bgImg, (self.bg_x1, self.bg_y1))
-
+        self.gameDisplay.blit(self.bgImg, (self.bg_x2, self.bg_y2))
         self.bg_y1 += self.bg_speed
         self.bg_y2 += self.bg_speed
 
