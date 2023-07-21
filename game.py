@@ -7,13 +7,13 @@ class CarRacing:
 
         pygame.init()
         #pygame.camera.init()
+        pygame.mixer.init()
         self.display_width = 800
         self.display_height = 600
         self.black = (0, 0, 0)
         self.white = (255, 255, 255)
         self.clock = pygame.time.Clock()
         self.gameDisplay = None
-
         self.initialize()
 
     def initialize(self):
@@ -27,7 +27,7 @@ class CarRacing:
 
         # enemy_car
         self.enemy_car = pygame.image.load('img\Ecar2.png')
-        self.enemy_car_startx = random.randrange(310, 450)
+        self.enemy_car_startx = random.randrange(350, 450)
         self.enemy_car_starty = -600
         self.enemy_car_speed = 5
         self.enemy_car_width = 31
@@ -46,6 +46,10 @@ class CarRacing:
         self.gameDisplay.blit(self.carImg, (car_x_coordinate, car_y_coordinate))
 
     def racing_window(self):
+        pygame.mixer.music.load("music.mp3")
+        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.play()
+        pygame.time.wait(7000)
         self.gameDisplay = pygame.display.set_mode((self.display_width, self.display_height))
         pygame.display.set_caption('Car Dodge')
         self.run_car()
@@ -61,7 +65,7 @@ class CarRacing:
 
                 if (event.type == pygame.KEYDOWN):
                     if (event.key == pygame.K_LEFT):
-                        if (self.car_x_coordinate>=340):
+                        if (self.car_x_coordinate>=400):
                             self.car_x_coordinate -= 50
                         print ("CAR X COORDINATES: %s" % self.car_x_coordinate)
                     if (event.key == pygame.K_RIGHT):
@@ -77,15 +81,16 @@ class CarRacing:
             self.enemy_car_starty += self.enemy_car_speed
 
             if self.enemy_car_starty > self.display_height:
+                self.enemy_car=random.choice([pygame.image.load("img\Ecar4.png"),pygame.image.load("img\Ecar3.png"),pygame.image.load("img\Ecar1.png"),pygame.image.load("img\Ecar2.png")])
                 self.enemy_car_starty = 0 - self.enemy_car_height
-                self.enemy_car_startx = random.randrange(310, 450)
+                self.enemy_car_startx = random.randrange(350, 450)
 
             self.car(self.car_x_coordinate, self.car_y_coordinate)
             self.highscore(self.count)
             self.count += 1
             if (self.count % 100 == 0):
-                self.enemy_car_speed += 1
-                self.bg_speed += 1
+                self.enemy_car_speed += 0.5
+                self.bg_speed += 0.5
             if self.car_y_coordinate < self.enemy_car_starty + self.enemy_car_height:
                 if self.car_x_coordinate > self.enemy_car_startx and self.car_x_coordinate < self.enemy_car_startx + self.enemy_car_width or self.car_x_coordinate + self.car_width > self.enemy_car_startx and self.car_x_coordinate + self.car_width < self.enemy_car_startx + self.enemy_car_width:
                     self.crashed = True
@@ -112,6 +117,7 @@ class CarRacing:
     def back_ground_raod(self):
         self.gameDisplay.blit(self.bgImg, (self.bg_x1, self.bg_y1))
         self.gameDisplay.blit(self.bgImg, (self.bg_x2, self.bg_y2))
+       
         self.bg_y1 += self.bg_speed
         self.bg_y2 += self.bg_speed
 
